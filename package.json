@@ -1,0 +1,22 @@
+{
+  "name": "blog_nodejs_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app",
+    "dev": "nodemon app",
+    "prod": "SET NODE_ENV=production& nodemon app.js"
+  },
+  "author": "\"Vaibhav.C\"",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.4",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.1.3",
+    "nodemon": "^3.0.3",
+    "validator": "^13.11.0"
+  }
+}
