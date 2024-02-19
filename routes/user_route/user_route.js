@@ -5,12 +5,14 @@ const userController = require('../../controllers/users/user_controller');
 const {
     registerUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    
 }=userController;
+
+const {getAllMyBlogs,deleteMyAccount} = require('../../controllers/users/user_blog');
 
 const {isUserAuthenticated} = require('../../middlewares/isUserAuthenicated');
 
-const {getAllMyBlogs} = require('../../controllers/users/user_blog');
 
 
 router.route('/user/create').post(registerUser);
@@ -18,5 +20,6 @@ router.route('/user/login').post(loginUser);
 router.route('/user/logout').get(isUserAuthenticated,logoutUser);
 
 router.route('/user/showMyBlogs').get(isUserAuthenticated,getAllMyBlogs);
+router.route('/user/deleteMyAccount').get(isUserAuthenticated,deleteMyAccount);
 
 module.exports = router;
