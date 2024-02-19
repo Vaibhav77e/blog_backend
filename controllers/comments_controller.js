@@ -35,4 +35,26 @@ exports.writeAComment = async(req,res,next)=>{
     }
 }
 
+// will provide all comments for the post. /blog/showComments
+
+exports.getComments = async(req,res,next)=>{
+    try{
+        const {blogId} = req.body;
+
+        const showComment = await CommentModel.find({blogID:blogId});
+
+        if(!showComment){
+            next(new NoDataError("No's comments found"));
+        }
+
+        res.status(200).json({
+            data:showComment,
+        })
+    }catch(err){
+        return res.status(500).json({
+            message:err.message,
+        })
+    }
+}
+
 

@@ -17,15 +17,11 @@ exports.isUserAuthenticated = async(req,res,next)=>{
     
         const verifyToken = jwt.verify(token,process.env.JWT_SECRET);
     
-        console.log(verifyToken.id);
-        console.log(token);
-    
         let user = await User.findById(verifyToken.id);
         
         if(!user){
             next(new NoDataError('User not found'));
         }
-    
         req.user = user;
     
         next();

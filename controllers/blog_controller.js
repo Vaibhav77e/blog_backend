@@ -1,6 +1,6 @@
 const BlogSchema = require('../models/blogModels');
 const {UnExpectedError,NoDataError} = require('../utils/customErrorHandlers');
-const CommentSchema = require('../models/commentsModel');
+// const CommentSchema = require('../models/commentsModel');
 
 // api to create or post blog : /blog/create
 
@@ -37,28 +37,12 @@ exports.createPost = async(req,res,next)=>{
 exports.showAllBlogs = async(req,res,next)=>{
     try{
         // req.user.id will be received from isAuthenticatedUser which is middleware
-        req.body.user = req.user.id;
 
-        const blogs = req.body.user;
+        const blogs = await BlogSchema.find({});
 
-        if(!user.id){
-            next(new NoDataError('User not found'));
+        if(blogs==null){
+            next(new UnExpectedError('Blog not found'));
         }
-
-
-
-        // const blogs = await BlogSchema.findById({
-        //     id: user
-        // });
-
-        // if(blogs==null || blogs.length<0){
-        //     next(new UnExpectedError('Blog not found'));
-        // }
-
-        // const comments = await CommentSchema.findById({
-        //     id: blogs.id
-        // });
-
         res.status(200).json({
             data:blogs
         });
