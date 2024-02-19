@@ -11,6 +11,7 @@ exports.createPost = async(req,res,next)=>{
 
         const {title,content,author,category} = req.body;
 
+
         const blog = await BlogSchema.create({
             title:title,
             content:content,
@@ -19,7 +20,9 @@ exports.createPost = async(req,res,next)=>{
             userId : req.body.user
         });
 
-        if(blog==null){
+        console.log(blog);
+
+        if(blog===null){
             next(new NoDataError('Could\'t create blog or data'))
         }
 
@@ -40,10 +43,11 @@ exports.showAllBlogs = async(req,res,next)=>{
 
         const blogs = await BlogSchema.find();
 
-        if(blogs==null){
+        if(blogs===null){
             next(new UnExpectedError('Blog not found'));
         }
         res.status(200).json({
+            result : blogs.length,
             data:blogs
         });
 

@@ -3,8 +3,11 @@ const dotenv = require('dotenv');
 const app = express();
 const connectToDatabase = require('./database/database');
 
+// import error handler from npm package
+const errorHandler = require('express-async-errors');
+
 // import all routes
-const userRoutes = require('./routes/user_route');
+const userRoutes = require('./routes/user_route/user_route');
 const blogRoutes = require('./routes/blog_route');
 const commentsRoutes = require('./routes/comments_route');
 
