@@ -24,19 +24,23 @@ const userSchema =new mongoose.Schema({
 {timestamps:true}
 );
 
+userSchema.pre('save',async function(){
+    if(!this.password){
+        next();
+    }
+    this.password = await bcrypt.hash(this.password,10);
+})
+
 
 
 // compare user passwords in database password
 userSchema.methods.comparePassword = async function(enterPassword){
-    console.log('current password:',enterPassword);
-    console.log('new password:',this.password);
-    console.log('old password:',this.password);
-    //return await bcrypt.compare(enterPassword,this.password);
-    if(enterPassword===this.password){
-        return true;
-    }else{
-        return false;
-    }
+    return await bcrypt.compare(enterPassword,this.password);
+    // if(enterPassword===this.password){
+    //     return true;
+    // }else{
+    //     return false;
+    // }
 }
 
 const UserModel = mongoose.model('User',userSchema);

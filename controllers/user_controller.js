@@ -47,7 +47,7 @@ exports.registerUser= async(req,res,next)=>{
 exports.loginUser = async(req,res,next)=>{
     try{
         const {email,password} = req.body;
-        const user = await User.findOne({email:email,password:password});
+        const user = await User.findOne({email:email}).select('+password');
 
         if(!user){
             return next(new NoDataError('User not found'));
@@ -66,4 +66,18 @@ exports.loginUser = async(req,res,next)=>{
             err:err.message,
         });
     }
+}
+
+// api endpoint /user/logout.
+
+exports.logoutUser = async(req,res)=>{
+    res.cookie('blog_token','none',{
+        expires: new Date(Date.now()),
+        httpOnly: true,
+    });
+
+    res.status(200).json({
+        message : 'You logged out successfully'
+    });
+
 }
