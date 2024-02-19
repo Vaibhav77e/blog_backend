@@ -52,10 +52,81 @@ exports.showAllBlogs = async(req,res,next)=>{
     }
 }
 
+// api to update the blog of user. /blog/:id
+
+exports.updateBlog = async (req,res)=>{
+    try{
+        // req.user.id will be received from isAuthenticatedUser which is middleware
+        const userId = req.user.id;
+        const blogPostId = req.params.id;
+
+        if(!blogPostId){
+            return res.status(404).json({message: "Please provide id"});
+        }
+
+        let blog = await BlogSchema.findById(blogPostId); 
+
+        let {title,content,category} = req.body;
+
+        if(!blog){
+            return res.status(404).json({message: "Blog not found"});
+        }
+
+        if(userId!==blog.userId.toString()){
+            return res.status(401).json({message: "You are not allowed to edit this blog"});
+        }
+
+        blog = await BlogSchema.findByIdAndUpdate(blogPostId,{title,content,category},{
+            new:true,
+            runValidators:true
+        })
+
+        res.status(200).json({
+            data: blog
+        });
+
+
+    }catch(err){
+        return res.status(500).json({
+            message: err.message
+        });
+    }
+}
+
+//api to delete the blog of user's /delete/:id
+exports.deleteBlog = async(req,res)=>{
+    try{
+        const userId = req.user.id;
+        const blogPostId = req.params.id;
+
+        if(!blogPostId){
+            return res.status(404).json({message: "Please provide id"});
+        }
+
+        let blog = await BlogSchema.findById(blogPostId);
+
+        if(!blog){
+            return res.status(404).json({message: "Blog not Found"});
+        }
+
+        if(userId!==blog.userId.toString()){
+            return res.status(401).json({message: "You are not allowed to delete this blog"});
+        }
+
+        blog = await BlogSchema.findByIdAndDelete(blogPostId);
+        
+        res.status(200).json({message: "Successfully deleted blog"});
+
+    }catch(err){
+        return res.status(500).json({
+            message: err.message
+        });
+    }
+}
+
 
 // api to add likes for the blogs /blog/likeAPost
-
-exports.likeBlog = async (req,res,next)=>{
+exports.likeBlog = async (req,res)=>{
     try{
         const blogId = req.body;
 
@@ -85,3 +156,5 @@ exports.likeBlog = async (req,res,next)=>{
         return res.status(500).json({message:err.message});
     }
 }
+
+
