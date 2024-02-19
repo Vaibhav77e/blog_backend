@@ -11,7 +11,6 @@ const userRoutes = require('./routes/user_route/user_route');
 const blogRoutes = require('./routes/blog_route');
 const commentsRoutes = require('./routes/comments_route');
 
-
 //Setting up config.env file variables
 dotenv.config({path:'./config/config.env'});
 
@@ -20,7 +19,6 @@ const PORT = 3000;
 
 // import middlewares
 const errorMiddlewares = require('./middlewares/errorMiddlewares');
-
 
 // connect to database
 connectToDatabase();
@@ -37,6 +35,7 @@ app.use('/api/v1',commentsRoutes);
 // import middlewares
 app.use(errorMiddlewares);
 
+// server starts here
 app.listen(PORT ,()=>{});
 
 console.log(`started to listening on port ${process.env.PORT} in ${process.env.NODE_ENV} mode`);
