@@ -2,7 +2,11 @@ const express = require('express');
 const dotenv = require('dotenv');
 const app = express();
 const connectToDatabase = require('./database/database');
+
+// import all routes
 const userRoutes = require('./routes/user_route');
+const blogRoutes = require('./routes/blog_route');
+const commentsRoutes = require('./routes/comments_route');
 
 
 //Setting up config.env file variables
@@ -22,9 +26,10 @@ connectToDatabase();
 app.use(express.json());
 app.use(express.urlencoded());
 
-// import all routes
+// initialize all imported routes
 app.use('/api/v1',userRoutes);
-
+app.use('/api/v1',blogRoutes);
+app.use('/api/v1',commentsRoutes);
 
 // import middlewares
 app.use(errorMiddlewares);

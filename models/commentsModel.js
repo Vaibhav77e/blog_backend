@@ -6,7 +6,7 @@ const commentSchema = mongoose.Schema({
         ref:'Blog',
         required:true
     },
-    data:{
+    description:{
         type:String,
         required:true,
     },
@@ -18,6 +18,6 @@ const commentSchema = mongoose.Schema({
 });
 
 
-const CommentModel = mongoose.Model('Comment',commentSchema);
+const CommentModel = mongoose.model('Comment',commentSchema);
 
 module.exports = CommentModel;

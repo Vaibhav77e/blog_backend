@@ -15,7 +15,7 @@ const blogSchema =new mongoose.Schema({
         type:String,
         required : [true,'Please provide author name'],
     },
-    content:{
+    category:{
         type:[String],
         required : [true,'Please select the category for your content'],
         enum:{
@@ -25,15 +25,20 @@ const blogSchema =new mongoose.Schema({
                 'Travel',
                 'Sports',
                 'Entertainment',
+                'Others'
             ]
         }
     },
     slug:String,
-    user:{
+    likes:[{
+        type:mongoose.Schema.ObjectId,
+        ref: 'User',
+    }],
+    userId:{
         type:mongoose.Schema.ObjectId,
         ref: 'User',
         required:true,
-    }
+    },
 },{
     timestamps:true
 });
