@@ -38,13 +38,47 @@ exports.showAllBlogs = async(req,res,next)=>{
     try{
         // req.user.id will be received from isAuthenticatedUser which is middleware
 
-        const blogs = await BlogSchema.find({});
+        const blogs = await BlogSchema.find();
 
         if(blogs==null){
             next(new UnExpectedError('Blog not found'));
         }
         res.status(200).json({
             data:blogs
+        });
+
+    }catch(err){
+        return res.status(500).json({message:err.message});
+    }
+}
+
+
+// api to add likes for the blogs /blog/likeAPost
+
+exports.likeBlog = async (req,res,next)=>{
+    try{
+        const blogId = req.body;
+
+        const userId = req.user.id;
+
+        const blogs = await BlogSchema.findById(blogId);
+
+        // Check if the user has already liked the blog
+        if (blogs.likes.includes(userId)) {
+            return res.status(400).json({
+              message:'You have already liked this blog'
+            });
+        }
+
+        // Add the user's ID to the likes array
+        blogs.likes.push(userId);
+
+        // Save the updated blog document
+        await blogs.save();
+
+        res.status(200).json({
+            message: "You liked the blog",
+            data: blogs
         });
 
     }catch(err){

@@ -32,6 +32,7 @@ const blogSchema =new mongoose.Schema({
     slug:String,
     likes:[{
         type:mongoose.Schema.ObjectId,
+        //unique:true,
         ref: 'User',
     }],
     userId:{
