@@ -11,6 +11,8 @@ const userRoutes = require('./routes/user_route/user_route');
 const blogRoutes = require('./routes/blog_route');
 const commentsRoutes = require('./routes/comments_route');
 
+const search = require('./routes/searchroutes');
+
 //Setting up config.env file variables
 dotenv.config({path:'./config/config.env'});
 
@@ -31,6 +33,9 @@ app.use(express.urlencoded());
 app.use('/api/v1',userRoutes);
 app.use('/api/v1',blogRoutes);
 app.use('/api/v1',commentsRoutes);
+
+// test
+app.use('/api/v1',search);
 
 // import middlewares
 app.use(errorMiddlewares);
