@@ -39,7 +39,7 @@ exports.createPost = async(req,res,next)=>{
 
 exports.showAllBlogs = async(req,res,next)=>{
     try{
-        // req.user.id will be received from isAuthenticatedUser which is middleware
+        
 
         const blogs = await BlogSchema.find();
 
