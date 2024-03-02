@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../../controllers/users/user_controller');
-const path = require('path');
+
 
 // testing
 const multer = require('multer');
@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
                               */
     },
     filename: function (req, file, cb) {
-      cb(null, Date.now()+ file.originalname);
+      cb(null, +Date.now()+ file.originalname);
     }
   });
   
