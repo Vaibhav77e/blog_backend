@@ -70,3 +70,8 @@ async function deleteUserdata(user){
         return res.status(500).json({ message: err.message });
     }
 } 
+
+// testing : api to upload filess
+exports.uploadFile = async (req,res)=>{
+    res.status(200).json(req.file)
+}
